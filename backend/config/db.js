@@ -1,25 +1,23 @@
-// Koneksi ke database MySQL pakai pool (mysql2)
+// config/db.js
 require("dotenv").config();
-const mysql = require("mysql2/promise");
+const { createClient } = require("@supabase/supabase-js");
 
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-});
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY // pakai service_role di backend
+);
 
-// Tes koneksi saat file ini dipanggil pertama kali
-pool.getConnection()
-  .then((conn) => {
-    console.log("Mysql connected");
-    conn.release();
-  })
-  .catch((err) => {
-    console.error("Mysql gagal konek:", err.message);
+// Tes koneksi
+supabase
+  .from("produk")
+  .select("id_produk")
+  .limit(1)
+  .then(({ error }) => {
+    if (error) {
+      console.error("Supabase gagal konek:", error.message);
+    } else {
+      console.log("Supabase connected");
+    }
   });
 
-module.exports = pool;
+module.exports = supabase;
