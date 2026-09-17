@@ -34,9 +34,8 @@ function requireRole(...roles) {
   };
 }
 
-// Nama bucket di Supabase Storage. Buat bucket ini dulu di dashboard
-// Supabase > Storage > New Bucket, dan set jadi Public.
-const BUCKET_NAME = "images";
+// Nama bucket di Supabase Storage (sudah dibuat di dashboard, public).
+const BUCKET_NAME = "produk-images";
 
 // Dulu multer nyimpen file ke disk (uploads/images). Sekarang cukup
 // ditampung di memory, lalu diteruskan ke Supabase Storage.
