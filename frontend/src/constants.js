@@ -2,13 +2,13 @@
  * constants.js — info toko (SITE), menu publik, enum form.
  */
 
-// Base URL backend, diambil dari .env
-export const API_URL = import.meta.env.VITE_API_URL;
+// Base URL backend, diambil dari .env (fallback ke /api)
+export const API_URL = import.meta.env.VITE_API_URL || "/api";
 
 // Origin backend tanpa "/api" — dipakai untuk menyusun URL gambar hasil upload
 // (backend simpan path relatif, mis. "/uploads/images/xxx.jpg", disajikan lewat
 // express.static di server.js, BUKAN di bawah /api).
-export const API_ORIGIN = API_URL.replace(/\/api\/?$/, "");
+export const API_ORIGIN = (API_URL || "/api").replace(/\/api\/?$/, "") || "";
 
 // Ubah path gambar dari backend jadi URL yang bisa langsung dipakai di <img src>.
 // - Path relatif hasil upload ("/uploads/images/xxx.jpg") -> digabung dengan API_ORIGIN
